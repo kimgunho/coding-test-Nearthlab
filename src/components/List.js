@@ -1,11 +1,12 @@
-import Pagination from './Paginaiton';
-
 import { useState, useEffect } from 'react';
+
+import Pagination from './Paginaiton';
 
 function List() {
   const [photos, setPhotos] = useState([]);
-  //   const [currentPage, setCurrentPage] = useState(1);
-  const currentPage = 1;
+  const [maxPage, setMaxPage] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [total, setTotal] = useState(null);
   const per = 12;
 
   useEffect(() => {
@@ -18,12 +19,20 @@ function List() {
       const response = await fetch(url);
       const data = await response.json();
       setPhotos(data.photos);
+      setTotal(data.meta.total);
+      setMaxPage(data.meta.maxPage);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const handleCurrentPageIndex = (num) => {
+    setCurrentPage(num);
+  };
+
   return (
     <>
+      <p>total : {total}</p>
       <ul>
         {photos?.map((item) => (
           <li key={item.id}>
@@ -38,7 +47,7 @@ function List() {
         ))}
       </ul>
 
-      <Pagination />
+      <Pagination onPageIndex={handleCurrentPageIndex} maxPage={maxPage} />
     </>
   );
 }
