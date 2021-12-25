@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 
 import styles from './App.module.scss';
 
-import List from './components/List';
+import List from './components/list/List';
 
 const cx = classNames.bind(styles);
 
