@@ -2,14 +2,14 @@ import classNames from 'classnames/bind';
 
 import styles from './App.module.scss';
 
-import List from './components/list/List';
+import Photos from './page';
 
 const cx = classNames.bind(styles);
 
 function App() {
   return (
     <div className={cx('wrapper')}>
-      <List />
+      <Photos />
     </div>
   );
 }
