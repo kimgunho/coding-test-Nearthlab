@@ -18,25 +18,13 @@ function List({ photos, total }) {
                 className={cx('photo')}
                 style={{ backgroundImage: `url(${item.photoUrl})` }}
               >
-                <p
-                  className={cx([
-                    'result',
-                    { sucess: item.labels.length === 0 },
-                  ])}
-                >
-                  {item.labels.length === 0 ? '완료' : '미완료'}
+                <p className={cx(['result', { sucess: item.completed }])}>
+                  {item.completed ? '완료' : '미완료'}
                 </p>
               </div>
               <div className={cx('info')}>
-                <h3 className={cx('title')}>파일 이름 : {title[0]}</h3>
-                <p
-                  className={cx([
-                    'label',
-                    { hidden: item.labels.length === 0 },
-                  ])}
-                >
-                  라벨 {item.labels.length}개
-                </p>
+                <h3 className={cx('title')}>{title[0]}</h3>
+                <p className={cx('label')}>라벨 {item.labels.length}개</p>
               </div>
             </li>
           );
