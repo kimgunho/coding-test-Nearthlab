@@ -1,0 +1,7 @@
+@import './common.scss';
+
+.wrapper {
+  width: 100%;
+  max-width: $breakpoint-tablet;
+  margin: auto;
+}
