@@ -1,0 +1,21 @@
+$breakpoint-mobile: 740px; // mobile
+$breakpoint-tablet: 1280px; // tablet
+
+@mixin backgroundCenter {
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+// responsive size
+@mixin mobile {
+  @media screen and (max-width: #{$breakpoint-mobile}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (max-width: $breakpoint-tablet) {
+    @content;
+  }
+}

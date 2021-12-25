@@ -1,0 +1,21 @@
+@import '../common.scss';
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3rem;
+
+  > li {
+    padding: 0.5rem 0.8rem;
+    margin: 0 0.2rem;
+    cursor: pointer;
+    color: #adafb6;
+
+    &.active {
+      color: #111;
+      background-color: #dfe3ea;
+      border-radius: 10px;
+    }
+  }
+}

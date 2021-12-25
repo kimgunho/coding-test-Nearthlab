@@ -1,6 +1,11 @@
+import classNames from 'classnames/bind';
 import { useState, useEffect } from 'react';
 
+import styles from './List.module.scss';
+
 import Pagination from './Paginaiton';
+
+const cx = classNames.bind(styles);
 
 function List() {
   const [photos, setPhotos] = useState([]);
@@ -31,17 +36,20 @@ function List() {
   };
 
   return (
-    <>
-      <p>total : {total}</p>
-      <ul>
+    <div className={cx('container')}>
+      <p className={cx('total')}>전체 {total}개</p>
+      <ul className={cx('photos')}>
         {photos?.map((item) => (
           <li key={item.id}>
-            <div style={{ backgroundImage: `url(${item.photoUrl})` }}>
-              <p>미완료</p>
-              <div>
-                <h3>파일 이름</h3>
-                <p>라벨 8개</p>
-              </div>
+            <div
+              className={cx('photo')}
+              style={{ backgroundImage: `url(${item.photoUrl})` }}
+            >
+              <p className={cx('result')}>미완료</p>
+            </div>
+            <div className={cx('info')}>
+              <h3 className={cx('title')}>파일 이름</h3>
+              <p className={cx('label')}>라벨 8개</p>
             </div>
           </li>
         ))}
@@ -52,7 +60,7 @@ function List() {
         onPageIndex={handleCurrentPageIndex}
         maxPage={maxPage}
       />
-    </>
+    </div>
   );
 }
 

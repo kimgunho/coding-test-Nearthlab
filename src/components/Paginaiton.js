@@ -1,10 +1,16 @@
+import classNames from 'classnames/bind';
 import { useState, useRef, useEffect } from 'react';
+
+import styles from './Pagination.module.scss';
+
+const cx = classNames.bind(styles);
 
 function Pagination({ onPageIndex, maxPage, currentPage }) {
   const [pageRange, setPageRange] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(1);
   const pageParent = useRef();
-  const firstPageRange = 'first';
-  const lastPageRange = 'last';
+  const firstPageRange = '<';
+  const lastPageRange = '>';
 
   useEffect(() => {
     getPaginaitonRange();
@@ -24,29 +30,46 @@ function Pagination({ onPageIndex, maxPage, currentPage }) {
     const {
       target: { innerText },
     } = event;
-    if (innerText !== undefined) {
-      if (innerText === firstPageRange) {
-        onPageIndex(1);
-      } else if (innerText === lastPageRange) {
-        onPageIndex(Number(maxPage));
-      } else {
-        onPageIndex(Number(innerText));
-      }
+    if (innerText.length >= 4) {
+      return;
+    }
+    if (innerText === firstPageRange) {
+      onPageIndex(1);
+    } else if (innerText === lastPageRange) {
+      onPageIndex(Number(maxPage));
+    } else {
+      onPageIndex(Number(innerText));
     }
   };
 
+  const handleActiveIndex = (num) => {
+    setActiveIndex(num);
+  };
+
   return (
-    <ul ref={pageParent} onClick={handleCurrentPageIndex}>
-      <li>{firstPageRange}</li>
+    <ul
+      className={cx('pagination')}
+      ref={pageParent}
+      onClick={handleCurrentPageIndex}
+    >
+      <li onClick={() => handleActiveIndex(1)}>{firstPageRange}</li>
       {pageRange.map((_, index) => {
         if (_ === 0) {
           return;
         } else if (_ === maxPage + 1) {
           return;
         }
-        return <li key={index}>{_}</li>;
+        return (
+          <li
+            onClick={() => handleActiveIndex(_)}
+            className={cx({ active: _ === activeIndex })}
+            key={index}
+          >
+            {_}
+          </li>
+        );
       })}
-      <li>{lastPageRange}</li>
+      <li onClick={() => handleActiveIndex(maxPage)}>{lastPageRange}</li>
     </ul>
   );
 }
