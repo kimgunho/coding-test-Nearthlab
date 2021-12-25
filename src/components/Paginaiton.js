@@ -1,16 +1,33 @@
-import { useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
-function Pagination({ onPageIndex, maxPage }) {
+function Pagination({ onPageIndex, maxPage, currentPage }) {
+  const [pageRange, setPageRange] = useState([]);
   const pageParent = useRef();
+  const firstPageRange = 'first';
+  const lastPageRange = 'last';
+
+  useEffect(() => {
+    getPaginaitonRange();
+  }, [currentPage]);
+
+  const getPaginaitonRange = () => {
+    if (currentPage === 1) {
+      setPageRange([currentPage, currentPage + 1, currentPage + 2]);
+    } else if (currentPage === maxPage) {
+      setPageRange([currentPage - 2, currentPage - 1, currentPage]);
+    } else {
+      setPageRange([currentPage - 1, currentPage, currentPage + 1]);
+    }
+  };
+
   const handleCurrentPageIndex = (event) => {
     const {
       target: { innerText },
     } = event;
-    console.log(innerText);
     if (innerText !== undefined) {
-      if (innerText === 'first') {
+      if (innerText === firstPageRange) {
         onPageIndex(1);
-      } else if (innerText === 'last') {
+      } else if (innerText === lastPageRange) {
         onPageIndex(Number(maxPage));
       } else {
         onPageIndex(Number(innerText));
@@ -20,11 +37,16 @@ function Pagination({ onPageIndex, maxPage }) {
 
   return (
     <ul ref={pageParent} onClick={handleCurrentPageIndex}>
-      <li>first</li>
-      {Array.from({ length: maxPage }, (_, index) => (
-        <li key={index}>{index + 1}</li>
-      ))}
-      <li>last</li>
+      <li>{firstPageRange}</li>
+      {pageRange.map((_, index) => {
+        if (_ === 0) {
+          return;
+        } else if (_ === maxPage + 1) {
+          return;
+        }
+        return <li key={index}>{_}</li>;
+      })}
+      <li>{lastPageRange}</li>
     </ul>
   );
 }

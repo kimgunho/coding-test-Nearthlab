@@ -47,7 +47,11 @@ function List() {
         ))}
       </ul>
 
-      <Pagination onPageIndex={handleCurrentPageIndex} maxPage={maxPage} />
+      <Pagination
+        currentPage={currentPage}
+        onPageIndex={handleCurrentPageIndex}
+        maxPage={maxPage}
+      />
     </>
   );
 }
