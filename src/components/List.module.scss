@@ -34,9 +34,13 @@
           right: 0.5rem;
           width: fit-content;
           padding: 0.3rem 0.5rem;
-          background-color: green;
           border-radius: 1rem;
           color: #fff;
+          background-color: #f5c85c;
+
+          &.sucess {
+            background-color: #6adc95;
+          }
         }
       }
       > .info {
