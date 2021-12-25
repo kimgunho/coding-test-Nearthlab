@@ -27,6 +27,7 @@
         @include backgroundCenter;
         position: relative;
         height: 12vw;
+        max-height: 235px;
 
         > .result {
           position: absolute;

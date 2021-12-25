@@ -1,0 +1,45 @@
+@import '../../common.scss';
+
+.container {
+  padding: 2rem 2rem 0 2rem;
+  box-sizing: border-box;
+
+  > .title {
+    font-weight: 500;
+    font-size: 1.25rem;
+    color: #434959;
+  }
+
+  .labels {
+    padding-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    > li {
+      margin-right: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      > input[type='checkbox'] {
+        appearance: none;
+        border-radius: 5px;
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-right: 0.5rem;
+        border: 1px solid #dfe3ea;
+        cursor: pointer;
+
+        &:checked {
+          background-color: #6adc95;
+          border: 0;
+        }
+      }
+
+      > label {
+        cursor: pointer;
+      }
+    }
+  }
+}
