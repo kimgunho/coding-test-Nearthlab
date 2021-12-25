@@ -63,6 +63,11 @@
           box-sizing: border-box;
           border-radius: 1rem;
           font-size: 0.9rem;
+
+          &.hidden {
+            text-indent: -9999px;
+            background-color: transparent;
+          }
         }
       }
     }
