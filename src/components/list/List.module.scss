@@ -13,13 +13,12 @@
   > .photos {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     flex-wrap: wrap;
 
     > li {
-      width: 24.5%;
+      width: 24%;
       cursor: pointer;
-      margin-bottom: 0.5%;
+      margin: 0.5%;
       border: 1px solid #dfe3ea;
       box-sizing: border-box;
 
