@@ -1,8 +1,11 @@
+import { useRecoilValue } from 'recoil';
 import { useState, useEffect } from 'react';
 
 import Nav from '../components/list/Nav';
 import List from '../components/list/List';
 import Pagination from '../components/list/Paginaiton';
+
+import { querysState } from '../recoil/state';
 
 function Photos() {
   const [photos, setPhotos] = useState([]);
@@ -10,10 +13,11 @@ function Photos() {
   const [currentPage, setCurrentPage] = useState(1);
   const [total, setTotal] = useState(null);
   const per = 12;
+  const query = useRecoilValue(querysState);
 
   useEffect(() => {
     getPhotos();
-  }, [currentPage]);
+  }, [currentPage, query]);
 
   const handleCurrentPageIndex = (num) => {
     setCurrentPage(num);
@@ -21,7 +25,7 @@ function Photos() {
 
   const getPhotos = async () => {
     try {
-      const url = `https://tester-api.nearthlab.com/v1/photos?page=${currentPage}&per=${per}`;
+      const url = `https://tester-api.nearthlab.com/v1/photos?page=${currentPage}&per=${per}${query}`;
       const response = await fetch(url);
       const data = await response.json();
       setPhotos(data.photos);
