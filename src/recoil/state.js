@@ -1,5 +1,10 @@
 import { atom } from 'recoil';
 
+export const photosState = atom({
+  key: 'photosState',
+  default: [],
+});
+
 export const labelsState = atom({
   key: 'labelsState',
   default: {
@@ -19,17 +24,3 @@ export const currentPageState = atom({
   key: 'currentPageState',
   default: 1,
 });
-
-// export const CheckedTypeState = selector({
-//   key: 'CheckedTypeState',
-//   get: ({ get }) => {
-//     let query;
-//     const types = get(labelsState);
-//     const { typeId1, typeId2, typeId3, typeId4 } = types;
-//     if (typeId1 !== null) {
-//       query = `&labelTypeIds[]=${typeId1}`;
-//     } else {
-//       query = '';
-//     }
-//   },
-// });

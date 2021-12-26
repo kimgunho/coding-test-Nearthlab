@@ -1,14 +1,14 @@
-import { useRecoilValue, useRecoilState } from 'recoil';
+import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil';
 import { useState, useEffect } from 'react';
 
 import Nav from '../components/list/Nav';
 import List from '../components/list/List';
 import Pagination from '../components/list/Paginaiton';
 
-import { querysState, currentPageState } from '../recoil/state';
+import { querysState, currentPageState, photosState } from '../recoil/state';
 
 function Photos() {
-  const [photos, setPhotos] = useState([]);
+  const setPhotos = useSetRecoilState(photosState);
   const [maxPage, setMaxPage] = useState(null);
   const [currentPage, setCurrentPage] = useRecoilState(currentPageState);
   const [total, setTotal] = useState(null);
@@ -39,7 +39,7 @@ function Photos() {
   return (
     <>
       <Nav />
-      <List total={total} photos={photos} />
+      <List total={total} />
       <Pagination onPageIndex={handleCurrentPageIndex} maxPage={maxPage} />
     </>
   );

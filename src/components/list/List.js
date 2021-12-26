@@ -1,10 +1,14 @@
+import { useRecoilValue } from 'recoil';
 import classNames from 'classnames/bind';
 
 import styles from './List.module.scss';
 
+import { photosState } from '../../recoil/state';
+
 const cx = classNames.bind(styles);
 
-function List({ photos, total }) {
+function List({ total }) {
+  const photos = useRecoilValue(photosState);
   return (
     <div className={cx('container')}>
       <p className={cx('total')}>전체 {total}개</p>
