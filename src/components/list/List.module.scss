@@ -22,11 +22,20 @@
       border: 1px solid #dfe3ea;
       box-sizing: border-box;
 
+      @include mobile {
+        width: 48%;
+        margin: 1%;
+      }
+
       > .photo {
         @include backgroundCenter;
         position: relative;
         height: 12vw;
         max-height: 235px;
+
+        @include mobile {
+          height: 8rem;
+        }
 
         > .result {
           position: absolute;

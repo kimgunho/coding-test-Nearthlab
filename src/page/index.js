@@ -1,5 +1,5 @@
-import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil';
 import { useState, useEffect } from 'react';
+import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil';
 
 import Nav from '../components/list/Nav';
 import List from '../components/list/List';
@@ -12,12 +12,24 @@ function Photos() {
   const [maxPage, setMaxPage] = useState(null);
   const [currentPage, setCurrentPage] = useRecoilState(currentPageState);
   const [total, setTotal] = useState(null);
-  const per = 12;
+  const [per, setPer] = useState(null);
   const query = useRecoilValue(querysState);
 
   useEffect(() => {
     getPhotos();
-  }, [currentPage, query]);
+  }, [currentPage, query, per]);
+
+  useEffect(() => {
+    function getPerCount() {
+      window.innerWidth > 740 ? setPer(12) : setPer(24);
+    }
+    getPerCount();
+    window.addEventListener('resize', getPerCount);
+  }, []);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [per]);
 
   const handleCurrentPageIndex = (num) => {
     setCurrentPage(num);
