@@ -4,6 +4,7 @@ import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil';
 import Nav from '../components/list/Nav';
 import List from '../components/list/List';
 import Pagination from '../components/list/Paginaiton';
+import Skeleton from '../components/shared/Skeleton';
 
 import { querysState, currentPageState, photosState } from '../recoil/state';
 
@@ -13,6 +14,7 @@ function Photos() {
   const [currentPage, setCurrentPage] = useRecoilState(currentPageState);
   const [total, setTotal] = useState(null);
   const [per, setPer] = useState(null);
+  const [loading, setLoading] = useState(true);
   const query = useRecoilValue(querysState);
 
   useEffect(() => {
@@ -43,6 +45,7 @@ function Photos() {
       setPhotos(data.photos);
       setTotal(data.meta.total);
       setMaxPage(data.meta.maxPage);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -51,7 +54,7 @@ function Photos() {
   return (
     <>
       <Nav />
-      <List total={total} />
+      {loading ? <Skeleton /> : <List total={total} />}
       <Pagination onPageIndex={handleCurrentPageIndex} maxPage={maxPage} />
     </>
   );
