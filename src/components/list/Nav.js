@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import { useSetRecoilState, useRecoilState } from 'recoil';
 
 import styles from './Nav.module.scss';
-import { labelsState, querysState } from '../../recoil/state';
+import { labelsState, currentPageState, querysState } from '../../recoil/state';
 
 const cx = classNames.bind(styles);
 
@@ -11,6 +11,7 @@ function Nav() {
   const [labels, setLabels] = useState([]);
   const [typesId, setTypesId] = useRecoilState(labelsState);
   const setQuerys = useSetRecoilState(querysState);
+  const setCurrentPage = useSetRecoilState(currentPageState);
 
   useEffect(() => {
     getLabels();
@@ -19,6 +20,7 @@ function Nav() {
   useEffect(() => {
     const { typeId1, typeId2, typeId3, typeId4 } = typesId;
     getQuerys(typeId1, typeId2, typeId3, typeId4);
+    setCurrentPage(1);
   }, [typesId]);
 
   const getQuerys = (...args) => {

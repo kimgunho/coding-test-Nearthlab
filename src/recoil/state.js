@@ -15,6 +15,11 @@ export const querysState = atom({
   default: '',
 });
 
+export const currentPageState = atom({
+  key: 'currentPageState',
+  default: 1,
+});
+
 // export const CheckedTypeState = selector({
 //   key: 'CheckedTypeState',
 //   get: ({ get }) => {

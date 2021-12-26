@@ -1,18 +1,25 @@
 import classNames from 'classnames/bind';
+import { useRecoilValue } from 'recoil';
 import { useState, useRef, useEffect } from 'react';
 
 import styles from './Pagination.module.scss';
 
+import { currentPageState } from '../../recoil/state';
+
 const cx = classNames.bind(styles);
 
-function Pagination({ onPageIndex, maxPage, currentPage }) {
+function Pagination({ onPageIndex, maxPage }) {
   const [pageRange, setPageRange] = useState([]);
   const [activeIndex, setActiveIndex] = useState(1);
+  const currentPage = useRecoilValue(currentPageState);
   const pageParent = useRef();
   const firstPageRange = '<';
   const lastPageRange = '>';
 
   useEffect(() => {
+    if (currentPage === 1) {
+      setActiveIndex(1);
+    }
     getPaginaitonRange();
   }, [currentPage]);
 
@@ -42,17 +49,13 @@ function Pagination({ onPageIndex, maxPage, currentPage }) {
     }
   };
 
-  const handleActiveIndex = (num) => {
-    setActiveIndex(num);
-  };
-
   return (
     <ul
       className={cx('pagination')}
       ref={pageParent}
       onClick={handleCurrentPageIndex}
     >
-      <li onClick={() => handleActiveIndex(1)}>{firstPageRange}</li>
+      <li onClick={() => setActiveIndex(1)}>{firstPageRange}</li>
       {pageRange.map((_, index) => {
         if (_ === 0) {
           return;
@@ -61,7 +64,7 @@ function Pagination({ onPageIndex, maxPage, currentPage }) {
         }
         return (
           <li
-            onClick={() => handleActiveIndex(_)}
+            onClick={() => setActiveIndex(_)}
             className={cx({ active: _ === activeIndex })}
             key={index}
           >
@@ -69,7 +72,7 @@ function Pagination({ onPageIndex, maxPage, currentPage }) {
           </li>
         );
       })}
-      <li onClick={() => handleActiveIndex(maxPage)}>{lastPageRange}</li>
+      <li onClick={() => setActiveIndex(maxPage)}>{lastPageRange}</li>
     </ul>
   );
 }
