@@ -9,9 +9,13 @@ const cx = classNames.bind(styles);
 
 function List({ total }) {
   const photos = useRecoilValue(photosState);
+  const totalCount = total ? String(total) : 'loading...';
   return (
     <div className={cx('container')}>
-      <p className={cx('total')}>전체 {total}개</p>
+      <p className={cx('total')}>
+        전체
+        {totalCount.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}개
+      </p>
       <ul className={cx('photos')}>
         {photos?.map((item) => {
           const splitCut = item.photoUrl.split('/');
