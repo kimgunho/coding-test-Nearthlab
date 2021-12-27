@@ -108,27 +108,32 @@ function Detail() {
                   ) : (
                     ''
                   )}
-                  {currentPhoto?.labels.map((label, index) => {
-                    return (
-                      <li key={label.id}>
-                        <h4 className={cx('title')}>라벨 #{index + 1}</h4>
-                        <ul className={cx('info')}>
-                          <li>
-                            <h5 className={cx('subTitle')}>유형</h5>
-                            <p className={cx('text')}>
-                              {checkLabels(label.typeId)}
-                            </p>
-                          </li>
-                          <li>
-                            <h5 className={cx('subTitle')}>설명</h5>
-                            <p className={cx('text')}>{label.description}</p>
-                          </li>
-                        </ul>
-                      </li>
-                    );
-                  })}
+                  {currentPhoto?.labels.map((label, index) => (
+                    <li key={label.id}>
+                      <h4 className={cx('title')}>라벨 #{index + 1}</h4>
+                      <ul className={cx('info')}>
+                        <li>
+                          <h5 className={cx('subTitle')}>유형</h5>
+                          <p className={cx('text')}>
+                            {checkLabels(label.typeId)}
+                          </p>
+                        </li>
+                        <li>
+                          <h5 className={cx('subTitle')}>설명</h5>
+                          <p className={cx('text')}>{label.description}</p>
+                        </li>
+                      </ul>
+                    </li>
+                  ))}
                 </ul>
-                <button className={cx(['button', 'on'])}>완료</button>
+                <button
+                  className={cx([
+                    'button',
+                    !currentPhoto?.completed ? 'on' : 'off',
+                  ])}
+                >
+                  {!currentPhoto?.completed ? '완료' : '미완료'}
+                </button>
               </div>
             </div>
           </>
