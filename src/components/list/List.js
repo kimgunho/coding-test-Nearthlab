@@ -3,16 +3,27 @@ import classNames from 'classnames/bind';
 
 import styles from './List.module.scss';
 
-import { photosState, DetailModalState } from '../../recoil/state';
+import {
+  photosState,
+  DetailModalState,
+  currentDetailIdState,
+} from '../../recoil/state';
 
 const cx = classNames.bind(styles);
 
 function List({ total }) {
+  const setCurrentDetailId = useSetRecoilState(currentDetailIdState);
   const setDetail = useSetRecoilState(DetailModalState);
   const photos = useRecoilValue(photosState);
   const totalCount = total ? String(total) : 'loading...';
 
-  const handleDetailShow = () => {
+  const handleGetDetail = (event) => {
+    const {
+      currentTarget: {
+        dataset: { id },
+      },
+    } = event;
+    setCurrentDetailId(id);
     setDetail(true);
   };
 
@@ -27,7 +38,7 @@ function List({ total }) {
           const splitCut = item.photoUrl.split('/');
           const title = splitCut[splitCut.length - 1].split('.');
           return (
-            <li key={item.id} onClick={handleDetailShow}>
+            <li data-id={item.id} key={item.id} onClick={handleGetDetail}>
               <div
                 className={cx('photo')}
                 style={{ backgroundImage: `url(${item.photoUrl})` }}

@@ -1,14 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import classNames from 'classnames/bind';
 import { useSetRecoilState, useRecoilState } from 'recoil';
 
 import styles from './Nav.module.scss';
-import { labelsState, currentPageState, querysState } from '../../recoil/state';
+import {
+  labelsInfoState,
+  labelsState,
+  currentPageState,
+  querysState,
+} from '../../recoil/state';
 
 const cx = classNames.bind(styles);
 
 function Nav() {
-  const [labels, setLabels] = useState([]);
+  const [labels, setLabels] = useRecoilState(labelsInfoState);
   const [typesId, setTypesId] = useRecoilState(labelsState);
   const setQuerys = useSetRecoilState(querysState);
   const setCurrentPage = useSetRecoilState(currentPageState);

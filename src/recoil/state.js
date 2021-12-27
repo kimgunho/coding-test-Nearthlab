@@ -29,3 +29,13 @@ export const DetailModalState = atom({
   key: 'DetailModalState',
   default: false,
 });
+
+export const currentDetailIdState = atom({
+  key: 'currentDetailIdState',
+  default: null,
+});
+
+export const labelsInfoState = atom({
+  key: 'labelsInfoState',
+  default: [],
+});

@@ -101,6 +101,14 @@
             border-radius: 1rem;
             margin-bottom: 1rem;
 
+            &.notLabel {
+              text-align: center;
+              padding: 4rem 0;
+              font-size: 1.25rem;
+              color: #434959;
+              border: 0;
+            }
+
             &:last-child {
               margin-bottom: 0;
             }
