@@ -4,4 +4,8 @@
   width: 100%;
   max-width: $breakpoint-tablet;
   margin: auto;
+
+  &.blur {
+    filter: blur(10px);
+  }
 }
