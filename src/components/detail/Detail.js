@@ -20,7 +20,7 @@ function Detail() {
   const [currentDetailId, setCurrentDetailId] =
     useRecoilState(currentDetailIdState);
   const [currentPhoto, setCurrentPhoto] = useState(null);
-  const photos = useRecoilValue(photosState);
+  const [photos, setPhotos] = useRecoilState(photosState);
   const labelsInfo = useRecoilValue(labelsInfoState);
 
   useEffect(() => {
@@ -53,6 +53,31 @@ function Detail() {
     }
 
     return typeTitle;
+  };
+
+  const handleChangePhoto = (id, value) => {
+    setCurrentPhoto((prev) => {
+      return {
+        id: prev.id,
+        photoUrl: prev.photoUrl,
+        photoTakenAt: prev.photoTakenAt,
+        createdAt: prev.createdAt,
+        completed: !prev.completed,
+        labels: prev.labels,
+      };
+    });
+
+    const index = photos.findIndex((photo) => photo.id === id);
+
+    if (index !== -1) {
+      let virtualPhotos = [...photos];
+      let photoIndexObject = { ...virtualPhotos[index] };
+      photoIndexObject.completed = value;
+      virtualPhotos[index] = photoIndexObject;
+      setPhotos(virtualPhotos);
+    } else {
+      console.log('no...');
+    }
   };
 
   return (
@@ -127,6 +152,12 @@ function Detail() {
                   ))}
                 </ul>
                 <button
+                  onClick={() =>
+                    handleChangePhoto(
+                      currentPhoto?.id,
+                      !currentPhoto?.completed,
+                    )
+                  }
                   className={cx([
                     'button',
                     !currentPhoto?.completed ? 'on' : 'off',
