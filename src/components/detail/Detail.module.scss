@@ -11,6 +11,11 @@
   z-index: 10;
   box-sizing: border-box;
   padding: 3rem;
+  display: none;
+
+  &.on {
+    display: block;
+  }
 
   > .contents {
     > .title {

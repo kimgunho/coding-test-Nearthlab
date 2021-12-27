@@ -1,15 +1,26 @@
+import { useRecoilState } from 'recoil';
 import classNames from 'classnames/bind';
 
 import styles from './Detail.module.scss';
 
+import { DetailModalState } from '../../recoil/state';
+
 const cx = classNames.bind(styles);
 
 function Detail() {
+  const [detailActive, setDetailActive] = useRecoilState(DetailModalState);
+
+  const handleDetailHide = () => {
+    setDetailActive(false);
+  };
   return (
-    <div className={cx('container')}>
+    <div className={cx(['container', { on: detailActive }])}>
       <div className={cx('contents')}>
         <h2 className={cx('title')}>
-          파일 상세 정보 <button className={cx('close')}>✕</button>
+          파일 상세 정보{' '}
+          <button onClick={handleDetailHide} className={cx('close')}>
+            ✕
+          </button>
         </h2>
         <div className={cx('inner')}>
           <div className={cx('info')}>

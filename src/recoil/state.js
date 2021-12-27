@@ -24,3 +24,8 @@ export const currentPageState = atom({
   key: 'currentPageState',
   default: 1,
 });
+
+export const DetailModalState = atom({
+  key: 'DetailModalState',
+  default: false,
+});
