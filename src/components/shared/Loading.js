@@ -4,7 +4,7 @@ import styles from './Loading.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Skeleton() {
+function Loading() {
   return (
     <div className={cx('container')}>
       <div className={cx('limiter')}>
@@ -14,4 +14,4 @@ function Skeleton() {
   );
 }
 
-export default Skeleton;
+export default Loading;
