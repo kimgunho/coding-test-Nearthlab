@@ -13,7 +13,7 @@
   },
   "extends": ["eslint:recommended", "plugin:prettier/recommended"],
   "rules": {
-    "no-console": "warm",
+    "no-console": "error",
     "prettier/prettier": ["error", { "endOfLine": "auto" }]
   }
 }
