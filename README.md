@@ -2,6 +2,8 @@
 
 ## 구현 안내서
 
+[링크 접속](https://coding-test-nearthlab.vercel.app/)
+
 - 프로젝트는 React로 구성이 되었습니다.
 - 리스트 형식에서 이미지 클릭시 모달형식으로 디테일 페이지가 노출됩니다.
 - 필터링의 Nav형식은 /labelTypes API를 호출하여 typeId값과 비교하여
