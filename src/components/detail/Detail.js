@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
 import classNames from 'classnames/bind';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import moment from 'moment';
 import 'moment/locale/ko';
 
 import styles from './Detail.module.scss';
-
 import {
   labelsInfoState,
   DetailModalState,
@@ -16,76 +15,72 @@ import {
 const cx = classNames.bind(styles);
 
 function Detail() {
-  const [detailActive, setDetailActive] = useRecoilState(DetailModalState);
+  const [currentPhoto, setCurrentPhoto] = useState(null);
+  const [photoTitle, setPhotoTitle] = useState('');
+  const [detailModalActive, setDetailModalActive] =
+    useRecoilState(DetailModalState);
   const [currentDetailId, setCurrentDetailId] =
     useRecoilState(currentDetailIdState);
-  const [currentPhoto, setCurrentPhoto] = useState(null);
   const [photos, setPhotos] = useRecoilState(photosState);
-  const labelsInfo = useRecoilValue(labelsInfoState);
+  const labelsTitle = useRecoilValue(labelsInfoState);
 
+  // 선택된 data-id와 photos의 id를 비교한 후 선택된 photo 추출
   useEffect(() => {
     const selectPhoto = photos.find(({ id }) => id === Number(currentDetailId));
+    redefinePhotoTitle(selectPhoto);
     setCurrentPhoto(selectPhoto);
   }, [currentDetailId]);
 
+  const redefinePhotoTitle = (object) => {
+    const photoUrlArray = object?.photoUrl.split('/');
+    if (photoUrlArray !== undefined) {
+      const titleCut = photoUrlArray[photoUrlArray.length - 1].split('.');
+      setPhotoTitle(titleCut[0]);
+    }
+  };
+
   const handleClearDetail = () => {
-    setDetailActive(false);
+    setDetailModalActive(false);
     setCurrentDetailId(null);
   };
 
-  const checkLabels = (id) => {
+  const getLabelTitle = (id) => {
     let typeTitle = '';
-    switch (id) {
-      case 1:
-        typeTitle = labelsInfo[0].title;
-        break;
-      case 2:
-        typeTitle = labelsInfo[1].title;
-        break;
-      case 3:
-        typeTitle = labelsInfo[2].title;
-        break;
-      case 4:
-        typeTitle = labelsInfo[3].title;
-        break;
-      default:
-        console.error('no typeId');
-    }
+
+    labelsTitle.forEach((label) => {
+      if (id === label.id) {
+        typeTitle = label.title;
+      }
+    });
 
     return typeTitle;
   };
 
-  const handleChangePhoto = (id, value) => {
-    setCurrentPhoto((prev) => {
-      return {
-        id: prev.id,
-        photoUrl: prev.photoUrl,
-        photoTakenAt: prev.photoTakenAt,
-        createdAt: prev.createdAt,
-        completed: value,
-        labels: prev.labels,
-      };
-    });
+  const handleUpdatePhotos = (id, completedValue) => {
+    setCurrentPhoto((prev) => ({
+      ...prev,
+      completed: completedValue,
+    }));
 
     const index = photos.findIndex((photo) => photo.id === id);
 
     if (index !== -1) {
       let virtualPhotos = [...photos];
-      let photoIndexObject = { ...virtualPhotos[index] };
-      photoIndexObject.completed = value;
-      virtualPhotos[index] = photoIndexObject;
+      let targetPhoto = { ...virtualPhotos[index] };
+      targetPhoto.completed = completedValue;
+      virtualPhotos[index] = targetPhoto;
       setPhotos(virtualPhotos);
     } else {
-      console.log('no...');
+      console.error('존재하지 않는 데이터입니다.');
     }
   };
 
   return (
     <>
-      <div className={cx(['container', { on: detailActive }])}>
+      <div className={cx(['container', { on: detailModalActive }])}>
         <div className={cx('contents')}>
           <h2 className={cx('title')}>
-            파일 상세 정보{' '}
+            파일 상세 정보
             <button onClick={handleClearDetail} className={cx('close')}>
               ✕
             </button>
@@ -94,20 +89,11 @@ function Detail() {
             <>
               <div className={cx('inner')}>
                 <div className={cx('info')}>
-                  <img src={currentPhoto?.photoUrl} alt="" />
+                  <img src={currentPhoto?.photoUrl} alt={photoTitle} />
                   <ul>
                     <li>
                       <span className={cx('title')}>파일명</span>
-                      <span className={cx('text')}>
-                        {currentPhoto?.photoUrl
-                          .split('/')
-                          .map((line, index) =>
-                            index ===
-                            currentPhoto?.photoUrl.split('/').length - 1
-                              ? line.replace(/\.jpg/g, '')
-                              : '',
-                          )}
-                      </span>
+                      <span className={cx('text')}>{photoTitle}</span>
                     </li>
                     <li>
                       <span className={cx('title')}>촬영시간</span>
@@ -133,29 +119,28 @@ function Detail() {
                         라벨이 존재하지 않습니다.
                       </li>
                     ) : (
-                      ''
+                      currentPhoto?.labels.map((label, index) => (
+                        <li key={label.id}>
+                          <h4 className={cx('title')}>라벨 #{index + 1}</h4>
+                          <ul className={cx('info')}>
+                            <li>
+                              <h5 className={cx('subTitle')}>유형</h5>
+                              <p className={cx('text')}>
+                                {getLabelTitle(label.typeId)}
+                              </p>
+                            </li>
+                            <li>
+                              <h5 className={cx('subTitle')}>설명</h5>
+                              <p className={cx('text')}>{label.description}</p>
+                            </li>
+                          </ul>
+                        </li>
+                      ))
                     )}
-                    {currentPhoto?.labels.map((label, index) => (
-                      <li key={label.id}>
-                        <h4 className={cx('title')}>라벨 #{index + 1}</h4>
-                        <ul className={cx('info')}>
-                          <li>
-                            <h5 className={cx('subTitle')}>유형</h5>
-                            <p className={cx('text')}>
-                              {checkLabels(label.typeId)}
-                            </p>
-                          </li>
-                          <li>
-                            <h5 className={cx('subTitle')}>설명</h5>
-                            <p className={cx('text')}>{label.description}</p>
-                          </li>
-                        </ul>
-                      </li>
-                    ))}
                   </ul>
                   <button
                     onClick={() =>
-                      handleChangePhoto(
+                      handleUpdatePhotos(
                         currentPhoto?.id,
                         !currentPhoto?.completed,
                       )
@@ -175,7 +160,7 @@ function Detail() {
           )}
         </div>
       </div>
-      <div className={cx(['dimmed', { on: detailActive }])} />
+      <div className={cx(['dimmed', { on: detailModalActive }])} />
     </>
   );
 }

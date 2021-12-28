@@ -13,20 +13,25 @@ import {
 const cx = classNames.bind(styles);
 
 function Nav() {
-  const [labels, setLabels] = useRecoilState(labelsInfoState);
-  const [typesId, setTypesId] = useRecoilState(labelsState);
+  const [labelsTitle, setLabelsTitle] = useRecoilState(labelsInfoState);
+  const [typeIds, setTypeIds] = useRecoilState(labelsState);
   const setQuerys = useSetRecoilState(querysState);
   const setCurrentPage = useSetRecoilState(currentPageState);
 
-  useEffect(() => {
-    getLabels();
+  // 라벨 데이터 호출 후 recoil 상태 저장
+  useEffect(async () => {
+    const url = 'https://tester-api.nearthlab.com/v1/labelTypes';
+    const response = await fetch(url);
+    const json = await response.json();
+    setLabelsTitle(json);
   }, []);
 
+  // 타입 선택별 쿼리문 호출
   useEffect(() => {
-    const { typeId1, typeId2, typeId3, typeId4 } = typesId;
+    const { typeId1, typeId2, typeId3, typeId4 } = typeIds;
     getQuerys(typeId1, typeId2, typeId3, typeId4);
     setCurrentPage(1);
-  }, [typesId]);
+  }, [typeIds]);
 
   const getQuerys = (...args) => {
     let query = '';
@@ -36,26 +41,19 @@ function Nav() {
     setQuerys(query);
   };
 
-  const getLabels = async () => {
-    const url = 'https://tester-api.nearthlab.com/v1/labelTypes';
-    const response = await fetch(url);
-    const results = await response.json();
-    setLabels(results);
-  };
-
   const onChange = (event) => {
     const {
       target: { value, checked, name },
     } = event;
     if (checked) {
-      setTypesId((prev) => {
+      setTypeIds((prev) => {
         return {
           ...prev,
           [name]: Number(value),
         };
       });
     } else {
-      setTypesId((prev) => {
+      setTypeIds((prev) => {
         return {
           ...prev,
           [name]: null,
@@ -68,7 +66,7 @@ function Nav() {
     <div className={cx('container')}>
       <h2 className={cx('title')}>라벨 종류 선택</h2>
       <ul className={cx('labels')}>
-        {labels?.map((label) => (
+        {labelsTitle?.map((label) => (
           <li key={label.id}>
             <input
               name={`typeId${label.id}`}

@@ -1,8 +1,7 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil';
 import classNames from 'classnames/bind';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import styles from './List.module.scss';
-
 import {
   photosState,
   DetailModalState,
@@ -13,9 +12,9 @@ const cx = classNames.bind(styles);
 
 function List({ total }) {
   const setCurrentDetailId = useSetRecoilState(currentDetailIdState);
-  const setDetail = useSetRecoilState(DetailModalState);
+  const setDetailModal = useSetRecoilState(DetailModalState);
   const photos = useRecoilValue(photosState);
-  const totalCount = total ? String(total) : 'loading...';
+  const totalCount = String(total);
 
   const handleGetDetail = (event) => {
     const {
@@ -24,7 +23,7 @@ function List({ total }) {
       },
     } = event;
     setCurrentDetailId(id);
-    setDetail(true);
+    setDetailModal(true);
   };
 
   return (

@@ -1,8 +1,7 @@
-import { useRecoilValue } from 'recoil';
 import classNames from 'classnames/bind';
+import { useRecoilValue } from 'recoil';
 
 import styles from './App.module.scss';
-
 import { DetailModalState } from './recoil/state';
 
 import Photos from './page';
