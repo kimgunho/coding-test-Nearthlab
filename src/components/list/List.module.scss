@@ -34,7 +34,8 @@
         max-height: 235px;
 
         @include mobile {
-          height: 8rem;
+          height: 25vw;
+          min-height: 100px;
         }
 
         > .result {

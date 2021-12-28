@@ -11,7 +11,14 @@
   z-index: 10;
   box-sizing: border-box;
   padding: 3rem;
+  max-width: 1280px;
   display: none;
+
+  @include mobile {
+    width: calc(100% - 4rem);
+    height: calc(100% - 4rem);
+    overflow-y: scroll;
+  }
 
   &.on {
     display: block;
@@ -46,10 +53,18 @@
       display: flex;
       align-items: flex-start;
 
+      @include mobile {
+        flex-direction: column;
+      }
+
       > .info {
         width: 20rem;
         padding-right: 2rem;
         box-sizing: border-box;
+
+        @include mobile {
+          width: 100%;
+        }
 
         > img {
           width: 100%;
@@ -83,6 +98,10 @@
 
       > .labels {
         width: calc(100% - 20rem);
+
+        @include mobile {
+          width: 100%;
+        }
 
         > .title {
           font-size: 1.25rem;
@@ -189,5 +208,20 @@
         }
       }
     }
+  }
+}
+
+.dimmed {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: transparent;
+  z-index: 1;
+  display: none;
+
+  &.on {
+    display: block;
   }
 }

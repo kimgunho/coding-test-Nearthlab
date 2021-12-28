@@ -16,15 +16,24 @@
     align-items: center;
     justify-content: flex-start;
 
+    @include mobile {
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
     > li {
       margin-right: 1rem;
       display: flex;
       align-items: center;
       justify-content: center;
 
+      @include mobile {
+        margin-bottom: 1rem;
+      }
+
       > input[type='checkbox'] {
         appearance: none;
-        border-radius: 5px;
+        border-radius: 50%;
         width: 1.5rem;
         height: 1.5rem;
         margin-right: 0.5rem;
@@ -34,6 +43,10 @@
         &:checked {
           background-color: #6adc95;
           border: 0;
+        }
+
+        @include mobile {
+          margin: 0 10px 0 0;
         }
       }
 
