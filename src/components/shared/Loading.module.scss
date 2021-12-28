@@ -1,0 +1,41 @@
+@import '../../common.scss';
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  padding: 2rem;
+  box-sizing: border-box;
+
+  > .limiter {
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    > .circle {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin: -2rem;
+      position: relative;
+      animation: rotateRight 2.5s linear infinite;
+      border-top: 8px solid #2b67e2;
+      border-left: 8px solid #f5c85c;
+      border-right: 8px solid #6adc95;
+      border-bottom: 8px solid #adb0b6;
+
+      @keyframes rotateRight {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    }
+  }
+}

@@ -4,7 +4,7 @@ import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil';
 import Nav from '../components/list/Nav';
 import List from '../components/list/List';
 import Pagination from '../components/list/Paginaiton';
-import Skeleton from '../components/shared/Skeleton';
+import Loading from '../components/shared/Loading';
 
 import { querysState, currentPageState, photosState } from '../recoil/state';
 
@@ -64,9 +64,15 @@ function Photos() {
 
   return (
     <>
-      <Nav />
-      {loading ? <Skeleton /> : <List total={total} />}
-      <Pagination onPageIndex={handleGetCurrentPage} maxPage={maxPage} />
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          <Nav />
+          <List total={total} />
+          <Pagination onPageIndex={handleGetCurrentPage} maxPage={maxPage} />
+        </>
+      )}
     </>
   );
 }
